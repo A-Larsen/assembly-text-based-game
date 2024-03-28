@@ -28,7 +28,7 @@ initialize_string:
     mov byte [rdi + rcx], 0
     loop .loop
 
-    pop rcx
+    pop rcx ; make sure to set variables back to previous state
 
     leave
     ret
@@ -60,12 +60,11 @@ main:
     pop rsi
     pop rax
 
-
     ; read file
     mov rdi, rax
 
     push rax
-    push rsi
+    push rsi ; extra psuh to align stack
 
     mov rsi, buffer
     mov rdx, 5
