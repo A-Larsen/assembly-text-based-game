@@ -33,16 +33,20 @@ print_string:
     ; I'm not using rax so I'm going to restore it
     push rax
     push rbx
+    push rcx
+
+    mov rcx, rdi
 
     call string_size
     mov rbx, rax
 
     mov rax, 1
     mov rdi, 1
-    mov rsi, buffer
+    mov rsi, rcx
     mov rdx, rbx
     syscall
 
+    pop rcx
     pop rbx
     pop rax
 
@@ -65,6 +69,28 @@ initialize_string:
 
     leave
     ret
+
+input:
+    push rbp
+    mov rbp, rsp
+
+    ; User input prompt
+    mov rax, SYS_WRITE
+    mov rdi, 1
+    mov rsi, rdi ; string
+    mov rdx, rsi ; length
+    syscall
+
+    ; Get user input
+    mov rax, SYS_READ
+    mov rdi, 0 ; file descriptor
+    mov rdx, MAX_STRING_SIZE ; size
+    mov rsi, buffer ; buffer
+    syscall
+
+    leave
+    ret
+
 
 main:
 
