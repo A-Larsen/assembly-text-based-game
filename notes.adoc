@@ -1,3 +1,6 @@
 == Determining string length of user input
 I think I need to fill `buffer` with zeros first and then determine its
 length after the read syscall
+
+== Saving data?
+Maybe just save to raw binary file and read it later

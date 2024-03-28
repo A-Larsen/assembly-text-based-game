@@ -5,10 +5,10 @@ section .data
     fmt_name_len equ $ - fmt_name - 1
     SYS_READ equ 0
     SYS_WRITE equ 1
-    MAX_STRING_SIZE equ 50
+    MAX_NAME_SIZE equ 10
 
 section .bss
-    buffer resb MAX_STRING_SIZE
+    buffer resb MAX_NAME_SIZE
 
 section .text
 
@@ -59,7 +59,7 @@ initialize_string:
 
     push rcx
 
-    mov rcx, MAX_STRING_SIZE
+    mov rcx, MAX_NAME_SIZE
 
 .loop:
     mov byte [rdi + rcx], 0
@@ -89,11 +89,22 @@ input:
     ; Get user input
     mov rax, SYS_READ
     mov rdi, 0 ; file descriptor
-    mov rdx, MAX_STRING_SIZE ; size
+    mov rdx, MAX_NAME_SIZE ; size
     mov rsi, rbx ; buffer
     syscall
 
     pop rbx
+
+    leave
+    ret
+
+exit:
+    push rbp
+    mov rbp, rsp
+
+    mov rax, 60
+    xor rdi, rdi
+    syscall
 
     leave
     ret
@@ -110,7 +121,6 @@ main:
     mov rdi, buffer
     call print_string
 
-    mov rax, 60
-    xor rdi, rdi
-    syscall
+    call exit
+
 
