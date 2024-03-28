@@ -11,7 +11,7 @@ section .data
     SYS_CLOSE equ 3
     SYS_WRITE equ 1
     buffer db 'sup', 0
-    buffer_len equ 3
+    buffer_len equ $ - buffer - 1
 
 
 
