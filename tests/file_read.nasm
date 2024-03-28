@@ -37,8 +37,8 @@ main:
     push rbp
     mov rbp, rsp
 
-    ;mov rdi, buffer
-    ;call initialize_string
+    mov rdi, buffer
+    call initialize_string
 
     ; open file and get fd
     mov rax, SYS_OPEN
@@ -60,6 +60,26 @@ main:
     pop rsi
     pop rax
 
+
+    ; read file
+    mov rdi, rax
+
+    push rax
+    push rsi
+
+    mov rsi, buffer
+    mov rdx, 5
+    mov rax, SYS_READ
+    syscall
+
+    ; print buffer
+    mov rdi, fmt2
+    mov rsi, buffer
+    mov rax, 0
+    call printf
+
+    pop rsi
+    pop rax
 
     ; close fd
     mov rdi, rax
