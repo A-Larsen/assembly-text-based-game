@@ -74,52 +74,41 @@ input:
     push rbp
     mov rbp, rsp
 
-    ; User input prompt
+    push rbx
+
+    mov rbx, rdx
+
+    ; write prompt
+    mov rax, rsi ; temp
+    mov rsi, rdi ; string
+    mov rdx, rax ; length
     mov rax, SYS_WRITE
     mov rdi, 1
-    mov rsi, rdi ; string
-    mov rdx, rsi ; length
     syscall
 
     ; Get user input
     mov rax, SYS_READ
     mov rdi, 0 ; file descriptor
     mov rdx, MAX_STRING_SIZE ; size
-    mov rsi, buffer ; buffer
+    mov rsi, rbx ; buffer
     syscall
+
+    pop rbx
 
     leave
     ret
 
-
 main:
-
     mov rdi, buffer
     call initialize_string
 
-    ; User input prompt
-    mov rax, SYS_WRITE
-    mov rdi, 1
-    mov rsi, fmt_name
-    mov rdx, fmt_name_len
-    syscall
-
-    ; Get user input
-    mov rax, SYS_READ
-    mov rdi, 0 ; file descriptor
-    mov rdx, MAX_STRING_SIZE ; size
-    mov rsi, buffer ; buffer
-    syscall
+    mov rdi, fmt_name
+    mov rsi, fmt_name_len
+    mov rdx, buffer
+    call input
 
     mov rdi, buffer
     call print_string
-
-   ; print new line
-   mov rax, 1
-   mov rdi, 1
-   mov rsi, 10
-   mov rdx, 1
-   syscall
 
     mov rax, 60
     xor rdi, rdi
