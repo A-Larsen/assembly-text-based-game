@@ -11,6 +11,8 @@ section .data
     SYS_CLOSE equ 3
     SYS_WRITE equ 1
     buffer db 'sup', 0
+    buffer_len equ 3
+
 
 
 section .text
@@ -62,7 +64,7 @@ main:
     push rsi ; extra psuh to align stack
 
     mov rsi, buffer
-    mov rdx, 5
+    mov rdx, buffer_len
     mov rax, SYS_WRITE
     syscall
 
