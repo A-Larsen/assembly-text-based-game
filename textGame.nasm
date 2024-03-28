@@ -25,6 +25,29 @@ string_size:
     leave
     ret
 
+print_string:
+    push rbp
+    mov rbp, rsp
+
+    ; I'm not using rax so I'm going to restore it
+    push rax
+    push rbx
+
+    call string_size
+    mov rbx, rax
+
+    mov rax, 1
+    mov rdi, 1
+    mov rsi, buffer
+    mov rdx, rbx
+    syscall
+
+    pop rax
+    pop rbx
+
+    leave
+    ret
+
 main:
     mov rcx, 16
 
@@ -47,17 +70,8 @@ main:
     mov rsi, buffer ; buffer
     syscall
 
-    ; Get string size
     mov rdi, buffer
-    call string_size
-
-    mov rbx, rax
-    ; print user input
-    mov rax, 1
-    mov rdi, 1
-    mov rsi, buffer
-    mov rdx, rbx
-    syscall
+    call print_string
 
    ; print new line
    mov rax, 1
