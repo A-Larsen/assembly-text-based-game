@@ -4,3 +4,6 @@ length after the read syscall
 
 == Saving data?
 Maybe just save to raw binary file and read it later
+
+== Writing to a file?
+open file wiht sys_open. write to file descriptor with sys_write?
