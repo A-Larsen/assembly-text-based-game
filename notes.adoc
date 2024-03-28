@@ -7,3 +7,8 @@ Maybe just save to raw binary file and read it later
 
 == Writing to a file?
 open file wiht sys_open. write to file descriptor with sys_write?
+
+== Stack frame
+ I thinking pushing sometimes causes segfaults because it unaligns the stack,
+ making it not 16-byte aligned. It seems that is the case, doing another push
+ seems to realign the stack
