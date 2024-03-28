@@ -42,8 +42,8 @@ print_string:
     mov rdx, rbx
     syscall
 
-    pop rax
     pop rbx
+    pop rax
 
     leave
     ret
