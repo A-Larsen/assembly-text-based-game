@@ -5,9 +5,10 @@ section .data
     fmt_name_len equ $ - fmt_name - 1
     SYS_READ equ 0
     SYS_WRITE equ 1
+    MAX_STRING_SIZE equ 16
 
 section .bss
-    buffer resb 16
+    buffer resb MAX_STRING_SIZE
 
 section .text
 
@@ -49,7 +50,7 @@ print_string:
     ret
 
 main:
-    mov rcx, 16
+    mov rcx, MAX_STRING_SIZE
 
 ; initial string with zeros
 .initialize_string:
