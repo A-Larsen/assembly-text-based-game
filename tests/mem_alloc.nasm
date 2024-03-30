@@ -1,19 +1,24 @@
 extern printf
 global main
+
+section .bss
+    something resb 1
+    start resq 1
+
 section .data
+    data1 db 'a', 0
+    data2 db 'b', 0
     fmt db "current break: %x", 10, 0
     SYS_EXIT equ 60
     SYS_BRK equ 12
-    data1 db "a", 0
-    data2 db "b", 0
 
-section .bss
-    start resq 1
 
 section .text
 main:
     push rbp
     mov rbp, rsp
+
+    mov byte [something], 'a'
 
     ; get current break
     mov rax, SYS_BRK
@@ -28,12 +33,15 @@ main:
     mov rax, SYS_BRK
     syscall
 
-debug:
+    ; this actually stores data1 and data2 to rdi because rdi is a quad word and
+    ; data1 and data2 come one after another in memory
+    ; doing rdi - <some amout> can get me data inside of .bss segment
     mov rdi, [start]
-    mov byte [rdi], 'a'
-    mov byte [rdi + 1], 0
-    mov byte [rdi + 2], 'b'
-    mov byte [rdi + 3], 0
+    mov rsi, data1
+    mov rdi, rsi
+
+
+debug:
 
     mov rax, SYS_EXIT
     xor rdi, rdi
