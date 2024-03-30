@@ -13,7 +13,11 @@ in depth.
 
 - https://stackoverflow.com/questions/5561022/how-to-dynamically-allocate-memory-for-an-array-in-assembly-8086-using-nasm[memory allocation]
 - https://baptiste-wicht.com/posts/2011/11/dynamic-memory-allocation-intel-assembly-linux.html[memory allocation intel assemly linux]
- 
+- https://stackoverflow.com/questions/22919019/unable-to-allocate-memory-with-mmap-in-x86-linux-assembly-language[mmap]
+- https://stackoverflow.com/questions/22586532/assembly-x86-brk-call-use[brk]
+- https://sourceware.org/glibc/wiki/MallocInternals[malloc]
+- https://www.sobyte.net/post/2022-03/mmap/[mmap]
+
 == Writing to a file?
 open file wiht sys_open. write to file descriptor with sys_write?
 
