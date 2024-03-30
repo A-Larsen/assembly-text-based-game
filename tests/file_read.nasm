@@ -14,7 +14,6 @@ section .data
 section .bss
     buffer resb 5
 
-
 section .text
 
 initialize_string:
