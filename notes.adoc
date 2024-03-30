@@ -2,7 +2,7 @@
 I think I need to fill `buffer` with zeros first and then determine its
 length after the read syscall
 
-== database ?
+== Database ?
 Maybe just save to raw binary file and read it later? Create vriables in `.data`
 that are ids for the position in the data. You could then create similar
 versions of that data in `.bss` that get read into memory on a read file. Data
@@ -16,7 +16,11 @@ in depth.
 - https://stackoverflow.com/questions/22919019/unable-to-allocate-memory-with-mmap-in-x86-linux-assembly-language[mmap]
 - https://stackoverflow.com/questions/22586532/assembly-x86-brk-call-use[brk]
 - https://sourceware.org/glibc/wiki/MallocInternals[malloc]
+- https://stackoverflow.com/questions/48672864/how-to-use-malloc-and-free-in-64-bit-nasm[malloc]
 - https://www.sobyte.net/post/2022-03/mmap/[mmap]
+
+I'm going to be allocating small chunks of memory so I'll probably want to use
+`brk`.
 
 == Writing to a file?
 open file wiht sys_open. write to file descriptor with sys_write?
@@ -25,6 +29,3 @@ open file wiht sys_open. write to file descriptor with sys_write?
  I thinking pushing sometimes causes segfaults because it unaligns the stack,
  making it not 16-byte aligned. It seems that is the case, doing another push
  seems to realign the stack
-
-== Malloc?
-https://stackoverflow.com/questions/48672864/how-to-use-malloc-and-free-in-64-bit-nasm
