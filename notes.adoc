@@ -3,7 +3,11 @@ I think I need to fill `buffer` with zeros first and then determine its
 length after the read syscall
 
 == Saving data?
-Maybe just save to raw binary file and read it later
+Maybe just save to raw binary file and read it later? Create vriables in `.data`
+that are ids for the position in the data. You could then create similar
+versions of that data in `.bss` that get read into memory on a read file. Data
+is writen into a file, first it writes the 8-bit id, then it writes the 8-bit
+length of the data, and then the data.
 
 == Writing to a file?
 open file wiht sys_open. write to file descriptor with sys_write?
