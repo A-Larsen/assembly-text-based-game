@@ -54,7 +54,8 @@ main:
     mov rdi, 'a'
     mov rsi, 1
     call func
-debug
+
+debug:
 
     mov rax, SYS_EXIT
     xor rdi, rdi
