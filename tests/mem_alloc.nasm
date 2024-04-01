@@ -37,8 +37,8 @@ main:
     ; data1 and data2 come one after another in memory
     ; doing rdi - <some amout> can get me data inside of .bss segment
     mov rdi, [start]
-    mov rsi, data1
-    mov rdi, rsi
+    ;mov rsi, data1
+    mov rdi, data1
 
 
 debug:
