@@ -26,31 +26,26 @@ init:
 
 func:
 section .bss
-    ;.size resq 1
+    .size resq 1
     .data resq 1
 
 section .text
     push rbp
     mov rbp, rsp
 
-    ;mov qword [.data], rdi
-    ;mov qword [.size], rsi
-    ;mov qword [.data], data1
-    ;mov qword [.size], rsi
+    mov rdi, [rdi]
+    mov qword [.data], rdi
+    mov qword [.size], rsi
 
     ;; allocate memory
     mov rax, [start]
-    lea rdi, [rax + 6]
+    lea rdi, [rax + .size]
     mov rax, SYS_BRK
     syscall
 
-    sub rax, 6
-    ;lea rdi, [rax]
-    ;mov rsi, [.data]
-    ;lea rdi, [rax]
-    mov rdi, [data1]
+    sub rax, .size
+    mov rdi, [.data]
     mov qword [rax], rdi
-    ;mov rax, rsi
 
     leave
     ret
