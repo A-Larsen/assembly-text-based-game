@@ -6,7 +6,7 @@ section .data
     SYS_EXIT equ 60
 
 section .bss
-    start resq 1
+    memp resq 1
 
 section .text
 
@@ -18,8 +18,7 @@ init:
     mov rdi, 0
     syscall
 
-    mov rbx, rax
-    mov [start], rbx
+    mov [memp], rax
 
     leave
     ret
@@ -38,14 +37,17 @@ section .text
     mov qword [.size], rsi
 
     ;; allocate memory
-    mov rax, [start]
+    mov rax, [memp]
     lea rdi, [rax + .size]
     mov rax, SYS_BRK
     syscall
 
-    sub rax, .size
+    mov rbx, [memp]
     mov rdi, [.data]
-    mov qword [rax], rdi
+    mov qword [rbx], rdi
+
+    mov rdi, [.size]
+    add qword [memp], rdi
 
     leave
     ret
