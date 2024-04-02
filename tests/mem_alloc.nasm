@@ -6,8 +6,7 @@ section .bss
     start resq 1
 
 section .data
-    data1 db 'a', 0
-    data2 db 'b', 0
+    data1 db 'hello', 0
     fmt db "current break: %x", 10, 0
     SYS_EXIT equ 60
     SYS_BRK equ 12
