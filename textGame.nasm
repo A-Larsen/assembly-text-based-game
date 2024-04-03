@@ -19,7 +19,7 @@ extern mem_alloc
 extern string_size
 extern string_print
 extern mem_set
-extern input
+extern io_input
 
 global main
 
@@ -53,7 +53,7 @@ main:
     mov rsi, fmt_name_len
     mov rdx, buffer
     mov rcx, MAX_NAME_SIZE
-    call input
+    call io_input
 
     mov rdi, buffer
     call string_size

@@ -15,11 +15,11 @@
 ; this program; if not, write to the Free Software Foundation, Inc., 51
 ; Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ;
-global input
+global io_input
 
 section .text
 
-input:
+io_input:
 section .bss
     .size resq 1
 
