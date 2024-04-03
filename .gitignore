@@ -6,4 +6,4 @@
 /**/*.lst
 *.lst
 !Makefile
-!LICENSES
+!LICENSE
