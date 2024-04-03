@@ -17,7 +17,6 @@ section .bss
     .data resq 1
     .alloc_address resq 1
 
-
 section .text
     push rbp
     mov rbp, rsp
@@ -27,7 +26,8 @@ section .text
 
     cmp byte [.first_call], 1
     je .end
-
+    
+    ; get location of system break
     mov rax, .SYS_BRK
     mov rdi, 0
     syscall
@@ -38,7 +38,7 @@ section .text
 
 .end:
 
-    ;; allocate memory
+    ; allocate memory by moving system break to a new location
     mov rdi, [.alloc_address]
     add rdi, [.size]
     mov rax, .SYS_BRK
@@ -49,6 +49,7 @@ section .text
     mov qword [rbx], rdi
 
     mov rdi, [.size]
+    mov rax, [.alloc_address] ; return the starting address of the data
     add qword [.alloc_address], rdi
 
     leave
