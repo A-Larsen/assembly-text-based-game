@@ -15,57 +15,41 @@
 ; this program; if not, write to the Free Software Foundation, Inc., 51
 ; Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ;
-extern mem_alloc
-extern string_size
-extern string_print
-extern mem_set
-extern input
-
-global main
-
-section .data
-    fmt_name db 'What is your name: ', 0
-    fmt_name_len equ $ - fmt_name - 1
-    MAX_NAME_SIZE equ 10
-
-section .bss
-    buffer resb MAX_NAME_SIZE
+global input
 
 section .text
 
-exit:
+input:
+section .bss
+    .size resq 1
+
+section .text
+
     push rbp
     mov rbp, rsp
 
-    mov rax, 60
-    xor rdi, rdi
+    mov qword [.size], rcx
+
+    push rbx
+
+    mov rbx, rdx
+
+    ; write prompt
+    mov rax, rsi ; temp
+    mov rsi, rdi ; string
+    mov rdx, rax ; length
+    mov rax, 1 ; sys_write
+    mov rdi, 1
     syscall
+
+    ; Get user input
+    mov rax, 0 ; sys_read
+    mov rdi, 0 ; file descriptor
+    mov rdx, [.size] ; size
+    mov rsi, rbx ; buffer
+    syscall
+
+    pop rbx
 
     leave
     ret
-
-main:
-    mov rdi, buffer
-    mov rsi, MAX_NAME_SIZE
-    call mem_set
-
-    mov rdi, fmt_name
-    mov rsi, fmt_name_len
-    mov rdx, buffer
-    mov rcx, MAX_NAME_SIZE
-    call input
-
-    mov rdi, buffer
-    call string_size
-
-    mov rdi, [buffer]
-    mov rsi, rax
-    call mem_alloc
-debug:
-
-    mov rdi, buffer
-    call string_print
-
-    call exit
-
-

@@ -1,5 +1,5 @@
-textGame: textGame.o memory.o string.o
-	gcc -g -o textGame textGame.o memory.o string.o -no-pie
+textGame: textGame.o memory.o string.o io.o
+	gcc -g -o textGame textGame.o memory.o string.o io.o -no-pie
 
 textGame.o: textGame.nasm
 	nasm -f elf64 -g -F dwarf textGame.nasm -l textGame.lst
@@ -9,6 +9,9 @@ memory.o: memory.nasm
 
 string.o: string.nasm
 	nasm -f elf64 -g -F dwarf string.nasm -l string.lst
+
+io.o: io.nasm
+	nasm -f elf64 -g -F dwarf io.nasm -l io.lst
 
 clean:
 	rm -rf *.o *.lst
