@@ -1,3 +1,4 @@
+extern memalloc
 global main
 
 section .data
@@ -117,6 +118,14 @@ main:
     mov rsi, fmt_name_len
     mov rdx, buffer
     call input
+debug:
+
+    mov rdi, buffer
+    call string_size
+
+    mov rdi, [buffer]
+    mov rsi, rax
+    call memalloc
 
     mov rdi, buffer
     call print_string
