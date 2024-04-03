@@ -7,7 +7,7 @@ section .data
 
 section .text
 
-func:
+memalloc:
 section .data
     .first_call db 0
     .SYS_BRK equ 12
@@ -61,11 +61,11 @@ main:
 
     mov rdi, [data1]
     mov rsi, 6
-    call func
+    call memalloc
 
     mov rdi, [data2]
     mov rsi, 8
-    call func
+    call memalloc
 
 debug:
 
