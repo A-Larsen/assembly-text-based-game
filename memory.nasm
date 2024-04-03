@@ -15,85 +15,77 @@
 ; this program; if not, write to the Free Software Foundation, Inc., 51
 ; Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ;
-extern mem_alloc
-extern string_size
-extern string_print
-extern mem_set
-
-global main
-
-section .data
-    fmt_name db 'What is your name: ', 0
-    fmt_name_len equ $ - fmt_name - 1
-    SYS_READ equ 0
-    SYS_WRITE equ 1
-    MAX_NAME_SIZE equ 10
-
-section .bss
-    buffer resb MAX_NAME_SIZE
+global mem_alloc
+global mem_set
 
 section .text
 
-input:
+mem_alloc:
+section .data
+    .first_call db 0
+
+section .bss
+    .size resq 1
+    .data resq 1
+    .alloc_address resq 1
+
+section .text
     push rbp
     mov rbp, rsp
 
     push rbx
+    push rcx
 
-    mov rbx, rdx
+    mov qword [.data], rdi
+    mov qword [.size], rsi
 
-    ; write prompt
-    mov rax, rsi ; temp
-    mov rsi, rdi ; string
-    mov rdx, rax ; length
-    mov rax, SYS_WRITE
-    mov rdi, 1
+    cmp byte [.first_call], 1
+    je .end
+    
+    ; get location of system break
+    mov rax, 12 ; 12 is sys_brk
+    mov rdi, 0
     syscall
 
-    ; Get user input
-    mov rax, SYS_READ
-    mov rdi, 0 ; file descriptor
-    mov rdx, MAX_NAME_SIZE ; size
-    mov rsi, rbx ; buffer
+    mov [.alloc_address], rax
+
+    mov byte [.first_call], 1
+
+.end:
+
+    ; allocate memory by moving system break to a new location
+    mov rdi, [.alloc_address]
+    add rdi, [.size]
+    mov rax, 12 ; 12 is sys_brk
     syscall
 
+    mov rbx, [.alloc_address]
+    mov rdi, [.data]
+    mov qword [rbx], rdi
+
+    mov rdi, [.size]
+    mov rax, [.alloc_address] ; return the starting address of the data
+    add qword [.alloc_address], rdi
+
+    pop rcx
     pop rbx
 
     leave
     ret
 
-exit:
+mem_set:
     push rbp
     mov rbp, rsp
 
-    mov rax, 60
-    xor rdi, rdi
-    syscall
+    push rcx
+
+    mov rcx, rsi
+
+.loop:
+    mov byte [rdi + rcx], 0
+    loop .loop
+
+    pop rcx
 
     leave
     ret
-
-main:
-    mov rdi, buffer
-    mov rsi, 10
-    call mem_set
-
-    mov rdi, fmt_name
-    mov rsi, fmt_name_len
-    mov rdx, buffer
-    call input
-
-    mov rdi, buffer
-    call string_size
-
-    mov rdi, [buffer]
-    mov rsi, rax
-    call mem_alloc
-debug:
-
-    mov rdi, buffer
-    call string_print
-
-    call exit
-
-

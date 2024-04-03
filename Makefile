@@ -1,11 +1,14 @@
-textGame: textGame.o memalloc.o
-	gcc -g -o textGame textGame.o memalloc.o -no-pie
+textGame: textGame.o memory.o string.o
+	gcc -g -o textGame textGame.o memory.o string.o -no-pie
 
 textGame.o: textGame.nasm
 	nasm -f elf64 -g -F dwarf textGame.nasm -l textGame.lst
 
-memalloc.o: memalloc.nasm
-	nasm -f elf64 -g -F dwarf memalloc.nasm -l memalloc.lst
+memory.o: memory.nasm
+	nasm -f elf64 -g -F dwarf memory.nasm -l memory.lst
+
+string.o: string.nasm
+	nasm -f elf64 -g -F dwarf string.nasm -l string.lst
 
 clean:
 	rm -rf *.o *.lst
