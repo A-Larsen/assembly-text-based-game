@@ -15,6 +15,7 @@
 ; this program; if not, write to the Free Software Foundation, Inc., 51
 ; Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ;
+extern printf
 extern mem_alloc
 extern string_size
 extern string_print
@@ -26,6 +27,7 @@ global main
 section .data
     fmt_name db 'What is your name: ', 0
     fmt_name_len equ $ - fmt_name - 1
+    greeting db 'hello %s', 0, 10
     MAX_NAME_SIZE equ 10
 
 section .bss
@@ -45,6 +47,9 @@ exit:
     ret
 
 main:
+    push rbp
+    mov rbp, rsp
+
     mov rdi, buffer
     mov rsi, MAX_NAME_SIZE
     call mem_set
@@ -61,11 +66,13 @@ main:
     mov rdi, buffer
     mov rsi, rax
     call mem_alloc
-debug:
 
-    mov rdi, buffer
-    call string_print
+    mov rdi, greeting
+    mov rsi, rax
+    mov rax, 0
+    call printf
 
     call exit
 
-
+    leave
+    ret
