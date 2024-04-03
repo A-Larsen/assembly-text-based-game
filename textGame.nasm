@@ -58,7 +58,7 @@ main:
     mov rdi, buffer
     call string_size
 
-    mov rdi, [buffer]
+    mov rdi, buffer
     mov rsi, rax
     call mem_alloc
 debug:

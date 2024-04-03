@@ -36,6 +36,7 @@ section .text
     push rbx
     push rcx
 
+    mov rdi, [rdi]
     mov qword [.data], rdi
     mov qword [.size], rsi
 
