@@ -15,7 +15,7 @@ section .data
 section .bss
     .size resq 1
     .data resq 1
-    .program_break resq 1
+    .alloc_address resq 1
 
 
 section .text
@@ -32,25 +32,24 @@ section .text
     mov rdi, 0
     syscall
 
-    mov [.program_break], rax
+    mov [.alloc_address], rax
 
     mov byte [.first_call], 1
 
 .end:
 
-
     ;; allocate memory
-    mov rdi, [.program_break]
+    mov rdi, [.alloc_address]
     add rdi, [.size]
     mov rax, .SYS_BRK
     syscall
 
-    mov rbx, [.program_break]
+    mov rbx, [.alloc_address]
     mov rdi, [.data]
     mov qword [rbx], rdi
 
     mov rdi, [.size]
-    add qword [.program_break], rdi
+    add qword [.alloc_address], rdi
 
     leave
     ret
