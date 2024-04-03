@@ -21,6 +21,9 @@ section .text
     push rbp
     mov rbp, rsp
 
+    push rbx
+    push rcx
+
     mov qword [.data], rdi
     mov qword [.size], rsi
 
@@ -52,6 +55,9 @@ section .text
     mov rax, [.alloc_address] ; return the starting address of the data
     add qword [.alloc_address], rdi
 
+    pop rcx
+    pop rbx
+
     leave
     ret
 
@@ -63,11 +69,13 @@ main:
     mov rsi, 6
     call memalloc
 
+debug1:
+
     mov rdi, [data2]
     mov rsi, 8
     call memalloc
 
-debug:
+debug2:
 
     mov rax, SYS_EXIT
     xor rdi, rdi
