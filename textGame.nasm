@@ -21,6 +21,7 @@ extern string_size
 extern string_print
 extern mem_set
 extern io_input
+extern int_to_string
 
 global main
 
@@ -32,6 +33,7 @@ section .data
 
 section .bss
     buffer resb MAX_NAME_SIZE
+    num_buf resb 4
 
 section .text
 
@@ -71,6 +73,22 @@ main:
     mov rsi, rax
     mov rax, 0
     call printf
+
+    mov rdi, num_buf
+    mov rsi, 4
+    call mem_set
+
+
+    mov rdi, 432
+    mov rsi, num_buf
+debug:
+    call int_to_string
+
+    mov rsi, rax
+    mov rax, 1
+    mov rdi, 1
+    mov rdx, 3
+    syscall
 
     call exit
 

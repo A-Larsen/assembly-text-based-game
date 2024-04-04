@@ -17,6 +17,7 @@
 ;
 extern string_size
 extern string_print
+extern int_to_string
 
 section .text
 
@@ -61,3 +62,53 @@ string_print:
     leave
     ret
 
+int_to_string: ; function
+section .data
+    .codes db '0123456789'
+    .temp times 10 db 0
+    .buffer times 10 db 0
+
+section .text
+    push rbp
+    mov rbp, rsp
+    xor rcx, rcx
+.loop:
+    ; modulo
+    xor rdx, rdx ; clear rdx to clear junk data
+    mov rax, rdi ; dividend (top)
+    mov rbx, 10 ; divisor (bottom)
+    div rbx ; result in RDX:RAX, modulo of division in rdx
+
+    ; store value 1 btyte of `codes` somewhere in temp
+    mov rax, [.codes + rdx]
+    mov qword [.temp + rcx], rax
+    inc rcx
+
+    ; keep dividing by 10
+    xor rdx, rdx
+    mov rax, rdi ; dividend (top)
+    mov rdi, 10 ; divisor (bottom)
+    div rdi 
+    mov rdi, rax ; result in rdi
+
+    test rdi, rdi
+    jnz .loop
+
+    xor rbx, rbx
+    mov rdx, .temp
+    dec rcx
+    add rdx, rcx
+    inc rcx
+
+.reverse:
+    mov rsi, [rdx]
+    and rsi, 0xFF
+    mov [.buffer + rbx], rsi
+    dec rdx
+    inc rbx
+    loop .reverse
+
+    mov rax, .buffer
+
+    leave
+    ret
