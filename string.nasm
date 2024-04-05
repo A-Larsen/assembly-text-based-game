@@ -15,9 +15,10 @@
 ; this program; if not, write to the Free Software Foundation, Inc., 51
 ; Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ;
-extern string_size
-extern string_print
-extern int_to_string
+global string_size
+global string_print
+global int_to_string
+global string_cmp
 
 section .text
 

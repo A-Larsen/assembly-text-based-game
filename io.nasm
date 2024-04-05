@@ -15,7 +15,10 @@
 ; this program; if not, write to the Free Software Foundation, Inc., 51
 ; Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ;
+extern string_cmp
+
 global io_input
+global io_printf
 
 section .text
 
@@ -51,5 +54,11 @@ section .text
 
     pop rbx
 
+    leave
+    ret
+
+io_printf:
+    push rbp
+    mov rbp, rsp
     leave
     ret
