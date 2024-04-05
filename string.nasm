@@ -113,3 +113,13 @@ section .text
 
     leave
     ret
+;;
+; Compares string 1 and string 2 and sets Zero flag if they are equal
+; @param rdi string 1
+; @param rsi string 2
+; @param rdx length
+string_cmp:
+    push rbp
+    mov rbp, rsp
+    leave
+    ret

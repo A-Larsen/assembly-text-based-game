@@ -22,6 +22,7 @@ extern string_print
 extern mem_set
 extern io_input
 extern int_to_string
+extern string_cmp
 
 global main
 
