@@ -31,6 +31,8 @@ section .data
     fmt_name_len equ $ - fmt_name - 1
     greeting db 'hello %s', 0, 10
     MAX_NAME_SIZE equ 10
+    cmp1 db "hello", 0
+    cmp2 db "hello", 0
 
 section .bss
     buffer resb MAX_NAME_SIZE
@@ -82,7 +84,6 @@ main:
 
     mov rdi, 432
     mov rsi, num_buf
-debug:
     call int_to_string
 
     mov rsi, rax
@@ -90,6 +91,12 @@ debug:
     mov rdi, 1
     mov rdx, 3
     syscall
+
+    mov rdi, cmp1
+    mov rsi, cmp2
+    mov rdx, 6
+    call string_cmp
+debug:
 
     call exit
 

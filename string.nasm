@@ -114,12 +114,32 @@ section .text
     leave
     ret
 ;;
-; Compares string 1 and string 2 and sets Zero flag if they are equal
+; Compares string 1 and string 2 and returns in rax the number of characters
+; that where consecutively equal
 ; @param rdi string 1
 ; @param rsi string 2
 ; @param rdx length
 string_cmp:
     push rbp
     mov rbp, rsp
+
+    mov rcx, rdx
+    xor rax, rax
+
+.loop:
+    mov rdx, [rdi]
+    and rdx, 0xFF
+    mov rbx, [rsi]
+    and rbx, 0xff
+
+    cmp rdx, rbx
+    jne .end
+
+    inc rdi
+    inc rsi
+    inc rax
+    loop .loop
+
+.end:
     leave
     ret
