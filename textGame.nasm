@@ -29,14 +29,25 @@ global main
 section .data
     fmt_name db 'What is your name: ', 0
     fmt_name_len equ $ - fmt_name - 1
+
+    fmt_age db 'What is your arg: ', 0
+    fmt_age_len equ $ - fmt_age - 1
+
+    fmt_level db 'What is your level: ', 0
+    fmt_level_len equ $ - fmt_level - 1
+
+    fmt_gender db 'What is your gender: ', 0
+    fmt_gender_len equ $ - fmt_gender - 1
+
     greeting db 'hello %s', 0, 10
-    MAX_NAME_SIZE equ 10
+    MAX_BUFFER_SIZE equ 10
     cmp1 db "hello", 0
     cmp2 db "hello", 0
 
 section .bss
-    buffer resb MAX_NAME_SIZE
+    buffer resb MAX_BUFFER_SIZE
     num_buf resb 4
+    strarr resq 1 ; address to the collection of strings
 
 section .text
 
@@ -55,14 +66,16 @@ main:
     push rbp
     mov rbp, rsp
 
+
+; name -------------------------
     mov rdi, buffer
-    mov rsi, MAX_NAME_SIZE
+    mov rsi, MAX_BUFFER_SIZE
     call mem_set
 
     mov rdi, fmt_name
     mov rsi, fmt_name_len
     mov rdx, buffer
-    mov rcx, MAX_NAME_SIZE
+    mov rcx, MAX_BUFFER_SIZE
     call io_input
 
     mov rdi, buffer
@@ -71,6 +84,33 @@ main:
     mov rdi, buffer
     mov rsi, rax
     call mem_alloc
+debug1:
+    mov [strarr], rax
+    ; x/8x * &strarr
+; ------------------------------
+
+
+; age --------------------------
+    mov rdi, buffer
+    mov rsi, MAX_BUFFER_SIZE
+    call mem_set
+
+    mov rdi, fmt_age
+    mov rsi, fmt_age_len
+    mov rdx, buffer
+    mov rcx, MAX_BUFFER_SIZE
+    call io_input
+
+    mov rdi, buffer
+    call string_size
+
+    mov rdi, buffer
+    mov rsi, rax
+    call mem_alloc
+debug2:
+; ------------------------------
+
+
 
     mov rdi, greeting
     mov rsi, rax
@@ -96,7 +136,6 @@ main:
     mov rsi, cmp2
     mov rdx, 6
     call string_cmp
-debug:
 
     call exit
 

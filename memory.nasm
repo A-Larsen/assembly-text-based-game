@@ -66,6 +66,7 @@ section .text
 
     mov rdi, [.size]
     mov rax, [.alloc_address] ; return the starting address of the data
+    ;mov rax, .alloc_address ; return the starting address of the data
     add qword [.alloc_address], rdi
 
     pop rcx

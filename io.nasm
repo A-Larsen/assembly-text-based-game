@@ -57,8 +57,15 @@ section .text
     leave
     ret
 
+;;
+; Formats the string to produce a new string
+; %s -> get changed to a string in rsi
+; @param rdi format string
+; @rsi array of strings to place in format string
 io_printf:
     push rbp
     mov rbp, rsp
+
+
     leave
     ret

@@ -37,3 +37,10 @@ create theses functions:
 
 - string_cmp
 - io_printf
+
+== To see memory address of strarr
+
+[source, gdb]
+----
+x/s * <address of strarr>
+----
