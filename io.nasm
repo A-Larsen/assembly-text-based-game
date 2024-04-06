@@ -85,8 +85,26 @@ section .text
     lea rdi, [rdi + rbx]
     mov rsi, .fmt_str
     call string_cmp
+    cmp rax, 0
+    jne .format
+
+    mov rdx, [rdi]
+    and rdx, 0xFF
+    ; print the byte
+    mov rax, 1
+    mov rdi, 1
+    mov rsi, rdx
+    mov rdx, 1
+    syscall
+
     inc rbx
     loop .loop
+
+    jmp .end
+
+.format:
+
+.end:
 
     leave
     ret
