@@ -165,14 +165,14 @@ debug2:
     mov rsi, 4
     call mem_set
 
-    mov rdi, 432
-    call int_to_string
+    ;mov rdi, 432
+    ;call int_to_string
 
-    mov rsi, rax
-    mov rax, 1
-    mov rdi, 1
-    mov rdx, 3
-    syscall
+    ;mov rsi, rax
+    ;mov rax, 1
+    ;mov rdi, 1
+    ;mov rdx, 3
+    ;syscall
 
     mov rdi, cmp1
     mov rsi, cmp2

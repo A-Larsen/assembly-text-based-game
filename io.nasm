@@ -73,16 +73,18 @@ io_printf:
 section .data
     .fmt_str db '%s'
 
+section .bss
+    .char resb 1
+
 section .text
     push rbp
     mov rbp, rsp
     
     call string_size
     mov rcx, rax
-    xor rbx, rbx
+    ;xor rbx, rbx
     
 .loop:
-    lea rdi, [rdi + rbx]
     mov rsi, .fmt_str
     call string_cmp
     cmp rax, 0
@@ -90,20 +92,28 @@ section .text
 
     mov rdx, [rdi]
     and rdx, 0xFF
+    mov byte [.char], dl
+
+    push rdi
+    push rcx
 
     ; print the byte
-    ;mov rax, 1
-    ;mov rdi, 1
-    ;mov rsi, rdx
-    ;mov rdx, 1
-    ;syscall
+    mov rax, 1 ; syscall write
+    mov rdi, 1 ; stdout
+    mov rsi, .char ; string
+    mov rdx, 1 ; length
+    syscall
 
-    inc rbx
+    pop rcx
+    pop rdi
+
+    inc rdi
     loop .loop
 
     jmp .end
 
 .format:
+    inc rdi
     jmp .loop
 
 .end:
