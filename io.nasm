@@ -75,11 +75,14 @@ section .data
 
 section .bss
     .char resb 1
+    .fmt resq 1
 
 section .text
     push rbp
     mov rbp, rsp
     
+    mov [.fmt], rsi
+
     call string_size
     mov rcx, rax
     ;xor rbx, rbx
@@ -113,6 +116,18 @@ section .text
     jmp .end
 
 .format:
+    push rdi
+    push rcx
+
+    mov rax, 1 ; syscall write
+    mov rdi, 1 ; stdout
+    mov rsi, [.fmt] ; 
+    mov rdx, 3 ; length
+    syscall
+
+    pop rcx
+    pop rdi
+
     inc rdi
     jmp .loop
 

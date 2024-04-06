@@ -156,10 +156,10 @@ debug2:
     mov rdi, age_id
     call getInfo
 
-    mov rdi, greeting
-    mov rsi,  rax
-    mov rax, 0
-    call printf
+    ;mov rdi, greeting
+    ;mov rsi,  rax
+    ;mov rax, 0
+    ;call printf
 
     mov rdi, num_buf
     mov rsi, 4
