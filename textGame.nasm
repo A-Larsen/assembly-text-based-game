@@ -15,7 +15,6 @@
 ; this program; if not, write to the Free Software Foundation, Inc., 51
 ; Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ;
-extern printf
 extern mem_alloc
 extern string_size
 extern string_print
@@ -155,11 +154,6 @@ debug2:
     
     mov rdi, age_id
     call getInfo
-
-    ;mov rdi, greeting
-    ;mov rsi,  rax
-    ;mov rax, 0
-    ;call printf
 
     mov rdi, num_buf
     mov rsi, 4

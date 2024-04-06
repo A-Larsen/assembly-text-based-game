@@ -19,6 +19,7 @@ global string_size
 global string_print
 global int_to_string
 global string_cmp
+global string_find
 
 section .text
 
@@ -33,6 +34,25 @@ string_size:
     xor rax, rax ; string size
 .loop:
     cmp byte [rdi + rax], 0
+    je .end
+    inc rax
+    jmp .loop
+.end:
+    leave
+    ret
+
+;;
+; Find the position of a character in a string
+; @rdi string
+; @rsi character
+; @return position
+string_find:
+    push rbp
+    mov rbp, rsp
+
+    xor rax, rax ; string size
+.loop:
+    cmp byte [rdi + rax], sil
     je .end
     inc rax
     jmp .loop

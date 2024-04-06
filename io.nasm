@@ -17,6 +17,7 @@
 ;
 extern string_cmp
 extern string_size
+extern string_find
 
 global io_input
 global io_printf
@@ -85,7 +86,6 @@ section .text
 
     call string_size
     mov rcx, rax
-    ;xor rbx, rbx
     
 .loop:
     mov rsi, .fmt_str
@@ -119,11 +119,14 @@ section .text
     push rdi
     push rcx
     ; need this to find the newline delimeter to determine the size
+    mov rdi, [.fmt]
+    mov rsi, 10
+    call string_find
 
+    mov rdx, rax ; length
     mov rax, 1 ; syscall write
     mov rdi, 1 ; stdout
     mov rsi, [.fmt] ; 
-    mov rdx, 3 ; length
     syscall
 
     pop rcx
