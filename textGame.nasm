@@ -49,11 +49,13 @@ section .bss
     buffer resb MAX_BUFFER_SIZE
     num_buf resb 4
     strarr resq 1 ; address to the collection of strings
+    name_id resq 1
+    age_id resq 1
 
 section .text
 
 ; Change this to have key value pairs
-getInfo:
+setInfo:
 section .data
     .data dq 0
     .size dq 0
@@ -88,6 +90,26 @@ section .text
     leave
     ret
 
+; @param rdi offset for array
+getInfo:
+    push rbp
+    mov rbp, rsp
+
+    push rbx
+    push rcx
+
+    mov rbx, [rdi]
+
+    mov rax, strarr
+    mov rax, [rax]
+
+    lea rax, [rax + rbx]
+
+    pop rcx
+    pop rbx
+
+    leave
+    ret
 
 exit:
     push rbp
@@ -110,27 +132,29 @@ main:
 ; name -------------------------
     mov rdi, fmt_name
     mov rsi, fmt_name_len
-    call getInfo
-debug1:
+    call setInfo
+    mov [name_id], rax
 ; ------------------------------
+
+    ;mov byte [name_id], al
+    ;mov rbx, name_id
+    ; what is changing name_id?
+
+debug1:
 
 ; age --------------------------
-
     mov rdi, fmt_age
     mov rsi, fmt_age_len
-    call getInfo
+    call setInfo
+    mov [age_id], rax
 ; ------------------------------
 debug2:
-
-    mov rbx, strarr
-    mov rbx, [rbx]
-
-    lea rbx, [rbx + rax]
-    ; or
-    ;add rcx, rax ; increment to get value in arary
+    
+    mov rdi, age_id
+    call getInfo
 
     mov rdi, greeting
-    mov rsi,  rbx
+    mov rsi,  rax
     mov rax, 0
     call printf
 
