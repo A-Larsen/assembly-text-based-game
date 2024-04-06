@@ -118,6 +118,7 @@ section .text
 .format:
     push rdi
     push rcx
+    ; need this to find the newline delimeter to determine the size
 
     mov rax, 1 ; syscall write
     mov rdi, 1 ; stdout
