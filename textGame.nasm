@@ -54,7 +54,9 @@ section .bss
 
 section .text
 
-; Change this to have key value pairs
+; sets value in strarr
+; @param rdi data to save
+; @param rsi size of data
 setInfo:
 section .data
     .data dq 0
@@ -90,7 +92,9 @@ section .text
     leave
     ret
 
+; gets value from strarrr
 ; @param rdi offset for array
+; @return array value
 getInfo:
     push rbp
     mov rbp, rsp
@@ -136,9 +140,6 @@ main:
     mov [name_id], rax
 ; ------------------------------
 
-    ;mov byte [name_id], al
-    ;mov rbx, name_id
-    ; what is changing name_id?
 
 debug1:
 
@@ -161,7 +162,6 @@ debug2:
     mov rdi, num_buf
     mov rsi, 4
     call mem_set
-
 
     mov rdi, 432
     mov rsi, num_buf
