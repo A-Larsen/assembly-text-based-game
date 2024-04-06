@@ -164,7 +164,6 @@ debug2:
     call mem_set
 
     mov rdi, 432
-    mov rsi, num_buf
     call int_to_string
 
     mov rsi, rax

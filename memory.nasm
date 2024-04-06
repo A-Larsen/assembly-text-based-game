@@ -21,6 +21,9 @@ global mem_getBreak
 
 section .text
 
+;;
+; get the memory break
+; @return address of the memory break
 mem_getBreak:
     push rbp
     mov rbp, rsp
@@ -31,7 +34,7 @@ mem_getBreak:
 
     leave
     ret
-
+;;
 ; Allocates memory in the heap and then places data in that memory. Returns the
 ; offset of the data in the heap
 ; @param rdi temp buffer for data
@@ -96,7 +99,10 @@ section .text
 
     leave
     ret
-
+;;
+; Sets a size of data to a specific value
+; @rdi value to set
+; @rsi size
 mem_set:
     push rbp
     mov rbp, rsp

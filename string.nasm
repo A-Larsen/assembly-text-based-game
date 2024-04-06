@@ -22,6 +22,10 @@ global string_cmp
 
 section .text
 
+;;
+; Gets the size of a string
+; @rdi string
+; @return size of string in rax
 string_size:
     push rbp
     mov rbp, rsp
@@ -62,8 +66,11 @@ string_print:
 
     leave
     ret
-
-int_to_string: ; function
+;;
+; Turns an integer into a string
+; @rdi integer
+; @return the string in rax
+int_to_string:
 section .data
     .codes db '0123456789'
     .temp times 10 db 0
