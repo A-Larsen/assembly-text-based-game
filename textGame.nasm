@@ -122,10 +122,12 @@ debug1:
 ; ------------------------------
 debug2:
 
-    lea rbx, [strarr]
+    lea rbx, strarr
     mov rcx, [rbx]
 
-    add rcx, rax ; increment to get value in arary
+    lea rcx, [rcx + rax]
+    ; or
+    ;add rcx, rax ; increment to get value in arary
 
     mov rdi, greeting
     mov rsi,  rcx
