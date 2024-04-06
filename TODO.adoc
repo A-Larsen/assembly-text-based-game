@@ -1,0 +1,3 @@
+== TODO
+[ ] - change 'getInfo' to have key value pairs, such that it takes the form
+      '<key>\n<value>'

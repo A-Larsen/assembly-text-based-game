@@ -52,6 +52,7 @@ section .bss
 
 section .text
 
+; Change this to have key value pairs
 getInfo:
 section .data
     .data dq 0
