@@ -118,12 +118,17 @@ debug1:
 
     mov rdi, fmt_age
     mov rsi, fmt_age_len
-debug2:
     call getInfo
 ; ------------------------------
+debug2:
+
+    lea rbx, [strarr]
+    mov rcx, [rbx]
+
+    add rcx, rax ; increment to get value in arary
 
     mov rdi, greeting
-    mov rsi, rax
+    mov rsi,  rcx
     mov rax, 0
     call printf
 

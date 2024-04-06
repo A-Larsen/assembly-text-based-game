@@ -85,8 +85,8 @@ section .text
 
     mov rdi, [.size]
     mov rax, [.alloc_address]
-    ;mov rbx, [.first_break]
-    ;sub rax, rbx
+    mov rbx, [.first_break]
+    sub rax, rbx
 
     ;mov rax, .alloc_address ; return the starting address of the data
     add qword [.alloc_address], rdi
