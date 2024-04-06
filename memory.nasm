@@ -40,12 +40,12 @@ mem_getBreak:
 mem_alloc:
 section .data
     .first_call db 0
-    .first_break dq 0
 
 section .bss
     .size resq 1
     .data resq 1
     .alloc_address resq 1
+    .first_break resq 1
 
 section .text
     push rbp
@@ -66,8 +66,8 @@ section .text
     mov rdi, 0
     syscall
 
-    mov [.alloc_address], rax
     mov [.first_break], rax
+    mov [.alloc_address], rax
 
     mov byte [.first_call], 1
 
@@ -85,7 +85,8 @@ section .text
 
     mov rdi, [.size]
     mov rax, [.alloc_address]
-    sub rax, [.first_break]
+    ;mov rbx, [.first_break]
+    ;sub rax, rbx
 
     ;mov rax, .alloc_address ; return the starting address of the data
     add qword [.alloc_address], rdi

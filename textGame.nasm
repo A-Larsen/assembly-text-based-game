@@ -118,8 +118,8 @@ debug1:
 
     mov rdi, fmt_age
     mov rsi, fmt_age_len
-    call getInfo
 debug2:
+    call getInfo
 ; ------------------------------
 
     mov rdi, greeting
