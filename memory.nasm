@@ -17,8 +17,20 @@
 ;
 global mem_alloc
 global mem_set
+global mem_getBreak
 
 section .text
+
+mem_getBreak:
+    push rbp
+    mov rbp, rsp
+
+    mov rax, 12 ; 12 is sys_brk
+    mov rdi, 0
+    syscall
+
+    leave
+    ret
 
 mem_alloc:
 section .data

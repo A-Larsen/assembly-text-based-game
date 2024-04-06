@@ -23,6 +23,7 @@ extern mem_set
 extern io_input
 extern int_to_string
 extern string_cmp
+extern mem_getBreak
 
 global main
 
@@ -102,6 +103,8 @@ main:
     push rbp
     mov rbp, rsp
 
+    call mem_getBreak
+    mov [strarr], rax
 
 ; name -------------------------
     mov rdi, fmt_name
@@ -109,8 +112,6 @@ main:
     call getInfo
 debug1:
 ; ------------------------------
-    mov [strarr], rax
-
 
 ; age --------------------------
 
