@@ -54,6 +54,7 @@ section .bss
 
 section .text
 
+;;
 ; sets value in strarr
 ; @param rdi data to save
 ; @param rsi size of data
@@ -92,6 +93,7 @@ section .text
     leave
     ret
 
+;;
 ; gets value from strarrr
 ; @param rdi offset for array
 ; @return array value
