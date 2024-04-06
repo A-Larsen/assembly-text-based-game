@@ -22,6 +22,11 @@ global io_printf
 
 section .text
 
+;; 
+; Output prompt to stdout and then get input from stdin
+; @rdi string for stdout
+; @rsi size of string for stdout
+; @rdx buffer to store input from stdin
 io_input:
 section .bss
     .size resq 1
