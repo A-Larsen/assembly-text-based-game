@@ -54,3 +54,17 @@ The delemiter for memory will be the newline ('\n') character
 0x405000:       "joe\n43\n"
 ----
 
+
+== Moving through array
+
+The code below moves takes the address of memory in the heap and incrments it to
+get a value in the array. This assumes rax is an offset value
+[source, nasm]
+----
+lea rbx, strarr
+mov rcx, [rbx]
+
+lea rcx, [rcx + rax]
+; or
+;add rcx, rax ; increment to get value in arary
+----
