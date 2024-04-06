@@ -32,9 +32,15 @@ mem_getBreak:
     leave
     ret
 
+; Allocates memory in the heap and then places data in that memory. Returns the
+; offset of the data in the heap
+; @param rdi temp buffer for data
+; @param rsi
+; @return returns the offset for the data in the heap in rax
 mem_alloc:
 section .data
     .first_call db 0
+    .first_break dq 0
 
 section .bss
     .size resq 1
@@ -61,6 +67,7 @@ section .text
     syscall
 
     mov [.alloc_address], rax
+    mov [.first_break], rax
 
     mov byte [.first_call], 1
 
@@ -77,7 +84,9 @@ section .text
     mov qword [rbx], rdi
 
     mov rdi, [.size]
-    mov rax, [.alloc_address] ; return the starting address of the data
+    mov rax, [.alloc_address]
+    sub rax, [.first_break]
+
     ;mov rax, .alloc_address ; return the starting address of the data
     add qword [.alloc_address], rdi
 
