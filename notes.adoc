@@ -58,7 +58,8 @@ The delemiter for memory will be the newline ('\n') character
 == Moving through array
 
 The code below moves takes the address of memory in the heap and incrments it to
-get a value in the array. This assumes rax is an offset value
+get a value in the array. This assumes rax is an offset value. The array address
+is in rcx.
 [source, nasm]
 ----
 lea rbx, strarr
