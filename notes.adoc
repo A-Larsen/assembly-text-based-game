@@ -44,3 +44,13 @@ create theses functions:
 ----
 x/s * <address of strarr>
 ----
+
+== Memory delimiter
+The delemiter for memory will be the newline ('\n') character
+
+[source, gdb]
+----
+(gdb) x/s * 0x4040e6
+0x405000:       "joe\n43\n"
+----
+

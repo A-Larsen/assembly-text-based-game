@@ -121,8 +121,6 @@ debug1:
 debug2:
 ; ------------------------------
 
-
-
     mov rdi, greeting
     mov rsi, rax
     mov rax, 0
