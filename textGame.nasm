@@ -24,6 +24,7 @@ extern io_input
 extern int_to_string
 extern string_cmp
 extern mem_getBreak
+extern io_printf
 
 global main
 
@@ -143,7 +144,6 @@ main:
 ; ------------------------------
 
 
-debug1:
 
 ; age --------------------------
     mov rdi, fmt_age
@@ -178,6 +178,11 @@ debug2:
     mov rsi, cmp2
     mov rdx, 6
     call string_cmp
+debug1:
+
+
+    mov rdi, greeting
+    call io_printf
 
     call exit
 

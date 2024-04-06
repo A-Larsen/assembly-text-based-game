@@ -1,4 +1,3 @@
 layout asm
 layout regs
-b debug1
-b debug2
+b io_printf.loop

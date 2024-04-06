@@ -129,6 +129,8 @@ section .text
 string_cmp:
     push rbp
     mov rbp, rsp
+    push rbx
+    push rcx
 
     mov rcx, rdx
     xor rax, rax
@@ -148,5 +150,9 @@ string_cmp:
     loop .loop
 
 .end:
+    pop rcx
+    pop rbx
+    ; dont want to include null terminator as part of the size
+    dec rax
     leave
     ret

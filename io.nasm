@@ -16,6 +16,7 @@
 ; Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ;
 extern string_cmp
+extern string_size
 
 global io_input
 global io_printf
@@ -68,9 +69,24 @@ section .text
 ; @param rdi format string
 ; @rsi array of strings to place in format string
 io_printf:
+
+section .data
+    .fmt_str db '%s'
+
+section .text
     push rbp
     mov rbp, rsp
-
+    
+    call string_size
+    mov rcx, rax
+    xor rbx, rbx
+    
+.loop:
+    lea rdi, [rdi + rbx]
+    mov rsi, .fmt_str
+    call string_cmp
+    inc rbx
+    loop .loop
 
     leave
     ret
