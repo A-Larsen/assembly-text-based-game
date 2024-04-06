@@ -180,8 +180,11 @@ debug2:
     call string_cmp
 debug1:
 
+    mov rdi, name_id
+    call getInfo
 
     mov rdi, greeting
+    mov rsi, rax
     call io_printf
 
     call exit
