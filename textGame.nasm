@@ -30,7 +30,7 @@ section .data
     fmt_name db 'What is your name: ', 0
     fmt_name_len equ $ - fmt_name - 1
 
-    fmt_age db 'What is your arg: ', 0
+    fmt_age db 'What is your age: ', 0
     fmt_age_len equ $ - fmt_age - 1
 
     fmt_level db 'What is your level: ', 0
@@ -51,6 +51,42 @@ section .bss
 
 section .text
 
+getInfo:
+section .data
+    .data dq 0
+    .size dq 0
+
+section .text
+
+    push rbp
+    mov rbp, rsp
+
+    ; mov address of rdi to data
+    mov qword [.data], rdi 
+    mov qword [.size], rsi
+
+    mov rdi, buffer
+    mov rsi, MAX_BUFFER_SIZE
+    call mem_set
+
+    ; take value of .data (value of the first argument)
+    mov rdi, [.data]
+    mov rsi, [.size]
+    mov rdx, buffer
+    mov rcx, MAX_BUFFER_SIZE
+    call io_input
+
+    mov rdi, buffer
+    call string_size
+
+    mov rdi, buffer
+    mov rsi, rax
+    call mem_alloc
+
+    leave
+    ret
+
+
 exit:
     push rbp
     mov rbp, rsp
@@ -68,45 +104,19 @@ main:
 
 
 ; name -------------------------
-    mov rdi, buffer
-    mov rsi, MAX_BUFFER_SIZE
-    call mem_set
-
     mov rdi, fmt_name
     mov rsi, fmt_name_len
-    mov rdx, buffer
-    mov rcx, MAX_BUFFER_SIZE
-    call io_input
-
-    mov rdi, buffer
-    call string_size
-
-    mov rdi, buffer
-    mov rsi, rax
-    call mem_alloc
+    call getInfo
 debug1:
-    mov [strarr], rax
-    ; x/8x * &strarr
 ; ------------------------------
+    mov [strarr], rax
 
 
 ; age --------------------------
-    mov rdi, buffer
-    mov rsi, MAX_BUFFER_SIZE
-    call mem_set
 
     mov rdi, fmt_age
     mov rsi, fmt_age_len
-    mov rdx, buffer
-    mov rcx, MAX_BUFFER_SIZE
-    call io_input
-
-    mov rdi, buffer
-    call string_size
-
-    mov rdi, buffer
-    mov rsi, rax
-    call mem_alloc
+    call getInfo
 debug2:
 ; ------------------------------
 
