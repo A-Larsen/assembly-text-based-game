@@ -59,13 +59,13 @@ The delemiter for memory will be the newline ('\n') character
 
 The code below moves takes the address of memory in the heap and incrments it to
 get a value in the array. This assumes rax is an offset value. The array address
-is in rcx.
+is in rbx.
 [source, nasm]
 ----
-lea rbx, strarr
-mov rcx, [rbx]
+mov rbx, strarr
+mov rbx, [rbx]
 
-lea rcx, [rcx + rax]
+lea rbx, [rbx + rax]
 ; or
 ;add rcx, rax ; increment to get value in arary
 ----

@@ -122,15 +122,15 @@ debug1:
 ; ------------------------------
 debug2:
 
-    lea rbx, strarr
-    mov rcx, [rbx]
+    mov rbx, strarr
+    mov rbx, [rbx]
 
-    lea rcx, [rcx + rax]
+    lea rbx, [rbx + rax]
     ; or
     ;add rcx, rax ; increment to get value in arary
 
     mov rdi, greeting
-    mov rsi,  rcx
+    mov rsi,  rbx
     mov rax, 0
     call printf
 
