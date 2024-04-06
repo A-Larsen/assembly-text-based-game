@@ -153,6 +153,6 @@ string_cmp:
     pop rcx
     pop rbx
     ; dont want to include null terminator as part of the size
-    dec rax
+    ;dec rax
     leave
     ret

@@ -90,12 +90,13 @@ section .text
 
     mov rdx, [rdi]
     and rdx, 0xFF
+
     ; print the byte
-    mov rax, 1
-    mov rdi, 1
-    mov rsi, rdx
-    mov rdx, 1
-    syscall
+    ;mov rax, 1
+    ;mov rdi, 1
+    ;mov rsi, rdx
+    ;mov rdx, 1
+    ;syscall
 
     inc rbx
     loop .loop
@@ -103,6 +104,7 @@ section .text
     jmp .end
 
 .format:
+    jmp .loop
 
 .end:
 
