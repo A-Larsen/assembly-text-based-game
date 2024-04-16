@@ -90,17 +90,24 @@ section .text
     mov rcx, rax
     
 .loop:
-    ;mov rsi, .fmt_int
-    ;mov rdx, 2
-    ;call string_cmp
-    ;cmp rax, 2
-    ;je .to_int
+    mov rbx, rdi
+    push rdi
 
+    mov rdi, rbx
+    mov rsi, .fmt_int
+    mov rdx, 2
+    call string_cmp
+    cmp rax, 2
+    je .to_int
+
+    mov rdi, rbx
     mov rsi, .fmt_str
     mov rdx, 2
     call string_cmp
     cmp rax, 2
     je .to_string
+
+    pop rdi
 
     mov rdx, [rdi]
     and rdx, 0xFF
