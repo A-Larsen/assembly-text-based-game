@@ -40,7 +40,8 @@ section .data
     fmt_gender db 'What is your gender: ', 0
     fmt_gender_len equ $ - fmt_gender - 1
 
-    greeting db 'hello %s', 0, 10
+    greeting db 'hello %s, what up', 0, 10
+    ;greeting db 'hello %d, what up', 0, 10
     MAX_BUFFER_SIZE equ 10
     cmp1 db "hello", 0
     cmp2 db "hello", 0
@@ -179,6 +180,8 @@ debug1:
 
     mov rdi, greeting
     mov rsi, rax
+    ;mov rsi, 4
+    ;mov rsi, 4
     call io_printf
 
     call exit

@@ -1,3 +1,3 @@
 layout asm
 layout regs
-b io_printf.loop
+set disassembly-flavor intel

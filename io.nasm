@@ -18,6 +18,7 @@
 extern string_cmp
 extern string_size
 extern string_find
+extern int_to_string
 
 global io_input
 global io_printf
@@ -73,10 +74,11 @@ io_printf:
 
 section .data
     .fmt_str db '%s'
+    .fmt_int db '%d'
+    .fmt times 10 db 0
 
 section .bss
     .char resb 1
-    .fmt resq 1
 
 section .text
     push rbp
@@ -88,10 +90,17 @@ section .text
     mov rcx, rax
     
 .loop:
+    ;mov rsi, .fmt_int
+    ;mov rdx, 2
+    ;call string_cmp
+    ;cmp rax, 2
+    ;je .to_int
+
     mov rsi, .fmt_str
+    mov rdx, 2
     call string_cmp
-    cmp rax, 0
-    jne .format
+    cmp rax, 2
+    je .to_string
 
     mov rdx, [rdi]
     and rdx, 0xFF
@@ -115,7 +124,30 @@ section .text
 
     jmp .end
 
-.format:
+.to_int:
+    push rdi
+    push rcx
+    mov rdi, [.fmt]
+    call int_to_string
+    mov rax, [rax]
+    ;and rax, 0xFF
+    mov [.fmt], rax
+    lea rdi, [.fmt]
+    mov rsi, 0
+    call string_find
+
+    mov rdx, rax ; length
+    mov rax, 1 ; syscall write
+    mov rdi, 1 ; stdout
+    lea rsi, [.fmt] ; 
+    syscall
+
+    pop rcx
+    pop rdi
+    jmp .loop
+
+
+.to_string:
     push rdi
     push rcx
     ; need this to find the newline delimeter to determine the size
@@ -132,7 +164,6 @@ section .text
     pop rcx
     pop rdi
 
-    inc rdi
     jmp .loop
 
 .end:
